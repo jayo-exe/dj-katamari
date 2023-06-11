@@ -15,15 +15,15 @@ let statusButton = 19;
 let exitButton = 41;
 
 let leftXAxisDecayInterval = 10;
-let leftXAxisDecayWeight = 0.04;
+let leftXAxisDecayWeight = 0.05;
 let leftYAxisDecayInterval = 10;
-let leftYAxisDecayWeight = 0.04;
+let leftYAxisDecayWeight = 0.05;
 let rightXAxisDecayInterval = 10;
-let rightXAxisDecayWeight = 0.04;
+let rightXAxisDecayWeight = 0.05;
 let rightYAxisDecayInterval = 10;
-let rightYAxisDecayWeight = 0.04;
+let rightYAxisDecayWeight = 0.05;
 
-let rollWeight = 0.05;
+let rollWeight = 0.1;
 let rollForwardMessages = [
     [176,49,1],
     [176,51,1]
@@ -33,12 +33,12 @@ let rollBackwardMessages = [
     [176,51,127]
 ]
 
-let rotateWeight = 0.1;
+let rotateWeight = 0.2;
 let rotateLeftMessages = [[176,48,127]];
 let rotateRightMessages = [[176,48,1]];
 
 
-let strafeWeight = 0.05;
+let strafeWeight = 0.1;
 let strafeLeftMessages = [[176,50,127]];
 let strafeRightMessages = [[176,50,1]];
 
@@ -145,17 +145,6 @@ function messageMatches(messages, incoming) {
     return false;
 }
 
-function findInRollForwardMessages(arr) {
-    for (let i = 0; i < rollForwardMessages.length; i++) {
-        if (arr[0] === rollForwardMessages[i][0] &&
-            arr[1] === rollForwardMessages[i][1] &&
-            arr[2] === rollForwardMessages[i][2]) {
-            return true;
-        }
-    }
-    return false;
-}
-
 function handleStatusButton() {
     console.log('********************');
     console.log('Control Status:');
@@ -204,7 +193,7 @@ function accelerateAxis(axis, value) {
 function decayAxis(axis, value) {
     let cVal = controller.axis[axis].value;
 
-    if(cVal == 0) return;
+    if(cVal === 0.0) return;
     if(cVal < 0) {
         value = value * -1;
         if(cVal - value > 0) {
@@ -219,5 +208,4 @@ function decayAxis(axis, value) {
         return;
     }
     controller.axis[axis].setValue(cVal - value);
-    return;
 }
